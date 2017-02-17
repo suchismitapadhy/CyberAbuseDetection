@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+    <title>Cyber Abuse Detection</title>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+    <link href="{{ url_for('static', filename='style.css') }}" type="text/css" rel="stylesheet" media="screen,projection" />
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="white" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="#" class="brand-logo red-text text-darken-2">Cyber Abuse Detection System</a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/index" class="red-text text-lighten-2">Analyze Text</a></li>
+            </ul>
+
+            <ul id="nav-mobile" class="side-nav">
+                <li><a href="/index" class="red-text text-lighten-2">Analyze Text</a></li>
+            </ul>
+            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+
+
+
+    <!-- Parallax image -->
+    <div id="index-banner" class="parallax-container">
+        <div class="parallax"><img src="{{ url_for('static', filename='background3.jpg') }}"></div>
+    </div>
+
+    <!--   Input Section   -->
+    <div class="container">
+        <div class="section">
+            <form id="check-twitter-handle" action="check-twitter-handle" method="POST">
+                <div class="row">
+                    <div class="col s12">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="twitter-handle" name="twitter-handle" type="text">
+                                <label for="twitter-handle">Enter twitter handle to analyze for abusive tweets</label>
+                            </div>
+                            <div class="input-field col s6 center">
+                                <button class="btn waves-effect waves-light red lighten-2 submit" type="submit" name="action">Analyze Twitter Handle
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            {% if recent_tweets %}
+            <div class="row">
+                <div class="col s12">
+                    <p class="center-align red-text bold">{{ abusive_tweets|length }} tweet(s) were found to be abusive out of {{ recent_tweets }} most recent tweets analyzed</p>
+                    <p>Top 10 most abusive tweets:</p>
+                    <ul class="collection">
+                    {% for count in range(0,10) if abusive_tweets[count] != null %}
+                    <li class="collection-item">{{ abusive_tweets[count] }}</li>
+                    {% endfor %}
+                </div>
+            </div>
+            {% elif error %}
+            <div class="row">
+                <div class="col s12">
+                    <p class="center-align red-text">An error occurred. Please try again.</p>
+                </div>
+            </div>
+            <br><br>
+            {% else %}
+            <br><br><br><br><br><br> {% endif %}
+        </div>
+    </div>
+
+    <!-- Parallax image -->
+    <div class="parallax-container valign-wrapper">
+        <div class="parallax"><img src="{{ url_for('static', filename='background2.jpg') }}"></div>
+    </div>
+
+    <!-- How does this work Section -->
+    <div class="container">
+        <div class="section">
+            <div class="row">
+                <div class="col s12 center">
+                    <h3><i class="large material-icons red-text text-lighten-2">question_answer</i></h3>
+                    <h4>How Does This Work?</h4>
+                    <p class="left-align light">One of the major issues that has adversely affected social interactions online is the malice of cyber abuse. This abuse has taken many forms ranging from insults, threats of physical violence to propaganda-based smear campaigns and
+                        identity-based bullying. We have built a machine learning model using Natural Language Processing capable to detecting personal insults directed at a person through machine learning of abusives. We then use it to predict whether
+                        text a person intends to post online is possibly abusive in native. This can server to warn users so that they can take corrective action before posting the text.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer section -->
+    <footer class="page-footer red lighten-2">
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    <h5 class="white-text">About Us</h5>
+                    <p class="grey-text text-lighten-4">We are a team of college students working on freeing the web of abusive content. A first step in this direction is to warn users before they post abusive content so that they can take corrective action. Another use of this
+                        system is to flag users who frequently post offensive content online.</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                Made by Nia, Nih, Su and Ro</a>
+            </div>
+        </div>
+    </footer>
+
+
+    <!--  Scripts-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+    <script src="{{ url_for('static', filename='init.js') }}"></script>
+
+</body>
+
+</html>
